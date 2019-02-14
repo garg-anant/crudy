@@ -1,0 +1,11 @@
+<h2>Update the Product</h2>
+<h5><u><a href="{% url 'product:main' %}">Home</a></u></h5>  <a href="{% url 'product:logout' %}"><u>Log out</u></a><br><br>
+
+<form action="." method="POST">
+	{% csrf_token %}
+	{# Enter the Product Id to update : <input type="text" name="prod_id"><br><br><br> #}
+	Product Name: <input type="text" name="prod_name" value="{{ product.prod_name }}"><br><br>
+	Price       : <input type="text" name="prod_price" value="{{ product.price }}"><br><br>
+	Quantity    : <input type="text" name="prod_quan" value="{{ product.quantity }}"><br><br><br>
+				  <input type="Submit" value="Update Product Fields">
+</form>

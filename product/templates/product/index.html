@@ -1,0 +1,12 @@
+<h2>Welcome</h2>
+<h4> Log in </h4><br><br>
+<form action="{% url 'product:views' %}" method="POST">
+{% csrf_token %}
+	<!-- {{form.as_p}} -->
+username : <input type="text" name="username"><br><br>
+password : <input type="password" name="password"><br><br><br>
+
+<input type="submit" value="Log in">
+</form>
+<br><br>
+<h3>If not Registered, <a href="{%url 'product:register' %}">Register Here</a>

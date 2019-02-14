@@ -1,0 +1,17 @@
+<h2>Register Here</h2>
+<h5><u><a href="{% url 'product:views' %}">Log in</a></u></h5>
+{% if error == 'USER ALREADY EXISTS' %}
+	<h5>User already Exists</h5>
+{% endif %}
+<form action="{% url 'product:register' %}" method="POST">
+{% csrf_token %}
+	{{ form.as_p }}
+
+<!-- 	Enter Name : <input type="text" name="name"><br><br>
+	Enter Username : <input type="text" name="username"><br><br>
+	Enter Password : <input type="password" name="pass"><br><br>
+	Re-enter Password : <input type="password" name="re_pass"><br><br>
+	Enter Mobile Number : <input type="text" name="mob"><br><br>
+	Enter Email ID : <input type="text" name="email"><br><br><br>
+ -->	<input type="submit">
+</form>

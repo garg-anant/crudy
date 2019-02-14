@@ -1,0 +1,10 @@
+<h2>Vendor Page</h2>
+<a href="{% url 'product:logout' %}"><u>Log out</u></a><br>
+<h4>Welcome, {{ username.username }}</h4>
+<h5> <a href="/home/anant/Desktop/new_project/project/media/sample/sample.xls">Download</a> here the excel file </h5>
+<form action="{% url 'product:main_vendor' %}" enctype="multipart/form-data" method='POST'>
+	{% csrf_token %}
+	<input type='file' name='myfile'>
+	<input type='submit' value='upload'>
+</form>
+

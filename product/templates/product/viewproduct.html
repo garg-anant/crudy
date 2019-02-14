@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<h2>The complete Database Table is hereby listed</h2>
+<h5><u><a href="{% url 'product:main' %}">Home</a></u></h5> <a href="{% url 'product:logout' %}"><u>Log out</u></a><br><br>
+
+{% for vendor_and_product in vendor_and_products %}
+
+<b>Model : </b>{{ vendor_and_product.product_name }} <br> <b>Colour : </b>{{ vendor_and_product.product_colour }} <br>  <b>Screen Size :</b>{{ vendor_and_product.product_screen_size }} <br> <b>OS : </b>{{ vendor_and_product.product_os }} <br> <b>RAM : </b> {{ vendor_and_product.product_ram }} <br> <b>Memory : </b> {{ vendor_and_product.product_memory }} <br> <b>Price : </b> {{ vendor_and_product.product_price }}
+<br><br><br>
+{% endfor %}
+
+<!-- {% for prod in products %}
+	{{prod.id}}----{{prod.prod_name}}----{{prod.price}}----
+	{% if prod.is_available %} Available {% else %} Not Available {% endif %}----{{prod.quantity}} &emsp;
+	<a class="btn btn-primary" href="{% url 'product:deleteproduct' product_id=prod.id %}">Delete</a>&emsp;
+	<a class="btn btn-primary" href="{% url 'product:updateproduct' product_id=prod.id %}">Update</a>
+	<br><br>
+{% endfor %} -->

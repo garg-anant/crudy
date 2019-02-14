@@ -1,0 +1,9 @@
+<h3>Add product</h3>
+<h5><u><a href="{% url 'product:main' %}">Home</a></u></h5> <a href="{% url 'product:logout' %}"><u>Log out</u></a><br><br>
+<form  action="{% url 'product:addproduct' %}" method="POST">
+	{% csrf_token %}
+	Product Name: <input type="text" name="prod_name"><br><br>
+	Price       : <input type="text" name="prod_price"><br><br>
+	Quantity    : <input type="text" name="prod_quan"><br><br><br>
+				  <input type="submit" value="Add Product">
+</form>

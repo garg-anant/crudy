@@ -1,0 +1,13 @@
+<h2>Please select the following options</h2>
+<a href="{% url 'product:logout' %}"><u>Log out</u></a>
+{% if user is not None %}
+	<h2> Welcome, {{ user.username }}!</h2>
+{% endif %}
+<ul>
+	{# <li><a href="{% url 'product:addproduct' %}">Add new Product</a></li>  #}
+	<li><a href="{% url 'product:viewproduct' %}">View all Products</a></li>
+	{# <li><a href="{% url 'product:viewcart' %}">View my Cart</a></li> #}
+	{# <li><a href="{% url 'product:updateproduct' %}">Update Field</a></li> #}
+	{# <!-- <li><a href="{% url 'product:deleteproduct' product_id %}">Delete a product</a></li> --> #}
+</ul>	
+
