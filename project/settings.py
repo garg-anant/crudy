@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'shell_plus',
     'django_extensions',
     'product',
+    'crispy_forms',
     # 'jinja2'
 
 ]
@@ -59,9 +60,19 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'project.urls'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
-
+    
+    # {
+    #     "BACKEND": "django.template.backends.jinja2.Jinja2",
+    #     "DIRS":[],
+    #     "APP_DIRS": True,
+    #     "OPTIONS": {
+    #     "match_extension": ".jinja",
+    #         }
+    # },
+    
     
     {
 

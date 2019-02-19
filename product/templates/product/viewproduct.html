@@ -1,20 +1,33 @@
-<!DOCTYPE html>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+{% include "./base.html" %}
+{# {% load static %} #}
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-<h2>The complete Database Table is hereby listed</h2>
-<h5><u><a href="{% url 'product:main' %}">Home</a></u></h5> <a href="{% url 'product:logout' %}"><u>Log out</u></a><br><br>
+
+<head>
+	
+
+
+{# <link rel="stylesheet" href="{% static 'css/viewproduct.css' %}"> #}
+
+</head>
+
+<body>
+
+{% block abc %}	
+<div class="container">
+<h2 id='name'>The complete Database Table is hereby listed</h2>
+{# <h5><u><a href="{% url 'product:main' %}">Home</a></u></h5> <a href="{% url 'product:logout' %}"><u>Log out</u></a><br><br> #}
+<!--= {# 
 
 {% for vendor_and_product in vendor_and_products %}
 
 <b>Model : </b>{{ vendor_and_product.product_name }} <br> <b>Colour : </b>{{ vendor_and_product.product_colour }} <br>  <b>Screen Size :</b>{{ vendor_and_product.product_screen_size }} <br> <b>OS : </b>{{ vendor_and_product.product_os }} <br> <b>RAM : </b> {{ vendor_and_product.product_ram }} <br> <b>Memory : </b> {{ vendor_and_product.product_memory }} <br> <b>Price : </b> {{ vendor_and_product.product_price }}
 <br><br><br>
 {% endfor %}
+ #}
+
+-->
 
 <!-- {% for prod in products %}
 	{{prod.id}}----{{prod.prod_name}}----{{prod.price}}----
@@ -23,3 +36,61 @@
 	<a class="btn btn-primary" href="{% url 'product:updateproduct' product_id=prod.id %}">Update</a>
 	<br><br>
 {% endfor %} -->
+
+	<!--{# {% for vendor_and_product in vendor_and_products %}
+
+		<div class="card text-white bg-primary mb-3" style="width: 18rem;" class="col-md-4">
+			  <div class="card-header">
+			    Featured
+			  </div>
+
+			  <ul class="list-group list-group-flush">
+			    <li class="card-text"><b>Model : </b>{{ vendor_and_product.product_name }}</li>
+			    <li class="card-text"><b>Colour : </b>{{ vendor_and_product.product_colour }}</li>
+			    <li class="card-text"><b>Screen Size :</b>{{ vendor_and_product.product_screen_size }}</li>
+			    <li class="card-text"><b>OS : </b>{{ vendor_and_product.product_os }}</li>
+			    <li class="card-text"><b>RAM : </b> {{ vendor_and_product.product_ram }}</li>
+			    <li class="card-text"><b>Memory : </b> {{ vendor_and_product.product_memory }}</li>
+			    <li class="card-text"><b>Price : </b> {{ vendor_and_product.product_price }}</li>
+			  </ul>
+		</div>
+
+	{% endfor %} #} -->
+
+	
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Model</th>
+					<th>Color</th>
+					<th>Screen-Size</th>
+					<th>OS</th>
+					<th>RAM</th>
+					<th>Memory</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for vendor_and_product in vendor_and_products %}
+					<tr>
+						<td>{{ vendor_and_product.product_name }}</td>
+						<td>{{ vendor_and_product.product_colour }}</td>
+						<td>{{ vendor_and_product.product_screen_size }}</td>
+						<td>{{ vendor_and_product.product_os }}</td>
+						<td>{{ vendor_and_product.product_ram }}</td>
+						<td>{{ vendor_and_product.product_memory }}</td>
+						<td>₹ {{ vendor_and_product.product_price }}</td>
+					</tr>
+					{% endfor %}
+			</tbody>
+
+		</table>
+		
+
+</div>
+{% endblock %}
+
+</body>
+
+</html>

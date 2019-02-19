@@ -53,14 +53,18 @@ def main(request):
 def main_vendor(request):
 	# return True
 	# print(request,'123')
+	ctx = {}
 	if request.user.is_authenticated:
 		username = request.user.username
-		# print(username)
-		render(request, 'product/main_vendor.html', {'username': username})
+		print(username)
+		ctx = {
+			'username': username
+		}
+		
 		if request.method == 'POST':
-			print('123')
+			# print('123')
 			myfile = request.FILES['myfile']
-			print(myfile)
+			# print(myfile)
 			fs = FileSystemStorage()
 			filename = fs.save(myfile.name, myfile)
 			path = '/home/anant/Desktop/new_project/project/media/'+filename
@@ -84,9 +88,9 @@ def main_vendor(request):
 			
 			os.system('rm /home/anant/Desktop/new_project/project/media/vendor.csv')
 
-			return render(request, 'product/main_vendor.html', {})
-		return render(request, 'product/main_vendor.html', {})	
-	return render(request, 'product/index.html')
+			return render(request, 'product/main_vendor.html', ctx)
+		return render(request, 'product/main_vendor.html', ctx)	
+	return render(request, 'product/index.html', ctx)
 
 
 
@@ -96,7 +100,7 @@ def register(request):
 		# print("1")
 		
 		if form.is_valid():
-			print('123')
+			# print('123')
 			data = form.save(commit=False)
 			# u = ProfileUser.objects.get(user=request.user)
 

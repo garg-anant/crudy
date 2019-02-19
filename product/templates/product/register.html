@@ -1,11 +1,25 @@
-<h2>Register Here</h2>
-<h5><u><a href="{% url 'product:views' %}">Log in</a></u></h5>
+{% extends './register_base.html' %}
+
+{% load crispy_forms_tags %}
+
+<html>
+<head>
+    
+</head>
+
+
+
+  {% block content %}
+<h4>Already Registered ?? <a href="{% url 'product:views' %}">Log in</a></h4>
+
 {% if error == 'USER ALREADY EXISTS' %}
 	<h5>User already Exists</h5>
 {% endif %}
 <form action="{% url 'product:register' %}" method="POST">
 {% csrf_token %}
-	{{ form.as_p }}
+	 
+	{# {{ form.as_p }} #}
+	{{ form|crispy }}
 
 <!-- 	Enter Name : <input type="text" name="name"><br><br>
 	Enter Username : <input type="text" name="username"><br><br>
@@ -14,4 +28,6 @@
 	Enter Mobile Number : <input type="text" name="mob"><br><br>
 	Enter Email ID : <input type="text" name="email"><br><br><br>
  -->	<input type="submit">
-</form>
+</form><br><br><br><br><br><br>
+{% endblock %}
+</html>

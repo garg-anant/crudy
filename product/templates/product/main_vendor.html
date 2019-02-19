@@ -1,10 +1,18 @@
-<h2>Vendor Page</h2>
-<a href="{% url 'product:logout' %}"><u>Log out</u></a><br>
-<h4>Welcome, {{ username.username }}</h4>
-<h5> <a href="/home/anant/Desktop/new_project/project/media/sample/sample.xls">Download</a> here the excel file </h5>
-<form action="{% url 'product:main_vendor' %}" enctype="multipart/form-data" method='POST'>
-	{% csrf_token %}
-	<input type='file' name='myfile'>
-	<input type='submit' value='upload'>
-</form>
+{% extends './vendor_base.html' %}
 
+{% block vendor %}
+<div class="container">
+<h2 id='abc'>Vendor Page</h2><br>
+<!--<a href="{% url 'product:logout' %}"><u>Log out</u></a><br>-->
+<h4 id='name'>Welcome, {{username}}</h4><br>
+<!--  <h5> <a href="/home/anant/Desktop/new_project/project/media/sample/sample.xls">Download</a> here the excel file </h5>  -->
+
+<form action="{% url 'product:main_vendor' %}" enctype="multipart/form-data" method='POST' class="custom-file">
+	{% csrf_token %}
+	<pre><input type='file' name='myfile'><br><input type='submit' value='Upload'> </pre>
+	
+</form> 
+
+</div>
+
+{% endblock %}
