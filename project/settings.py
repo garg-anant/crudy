@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'product',
     'crispy_forms',
-    # 'jinja2'
+    'jinja2'
 
 ]
 
@@ -64,14 +64,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     
-    # {
-    #     "BACKEND": "django.template.backends.jinja2.Jinja2",
-    #     "DIRS":[],
-    #     "APP_DIRS": True,
-    #     "OPTIONS": {
-    #     "match_extension": ".jinja",
-    #         }
-    # },
+    {
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "DIRS":[],
+        "APP_DIRS": True,
+        "OPTIONS": {
+        # "match_extension": ".jinja",
+            }
+    },
     
     
     {

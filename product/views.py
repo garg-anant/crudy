@@ -9,7 +9,7 @@ from .forms import RegisterUser
 from django.core.files.storage import FileSystemStorage
 # import xlrd
 import csv
-from django.db.models import Max
+from django.db.models import Max, Count
 import os
 # from django.contrib.auth.models import User
 
@@ -40,15 +40,15 @@ def index(request):
 				# return render(request, 'product/main.html',{'user':user})
 
 	# print("not")
-	return render(request, 'product/index.html', {})
+	return render(request, 'product/index.jinja', {})
 
 # @login_required
 def main(request):
 	if not request.user.is_authenticated:
 		# print('not authenticated')
-		return render(request, 'product/index.html')
+		return render(request, 'product/index.jinja')
 	# print('authenticated')
-	return render(request, 'product/main.html', {})	
+	return render(request, 'product/main.jinja', {})	
 
 def main_vendor(request):
 	# return True
@@ -88,9 +88,9 @@ def main_vendor(request):
 			
 			os.system('rm /home/anant/Desktop/new_project/project/media/vendor.csv')
 
-			return render(request, 'product/main_vendor.html', ctx)
-		return render(request, 'product/main_vendor.html', ctx)	
-	return render(request, 'product/index.html', ctx)
+			return render(request, 'product/main_vendor.jinja', ctx)
+		return render(request, 'product/main_vendor.jinja', ctx)	
+	return render(request, 'product/index.jinja', ctx)
 
 
 
@@ -101,44 +101,33 @@ def register(request):
 		
 		if form.is_valid():
 			# print('123')
-			data = form.save(commit=False)
+			data = form.save()
 			# u = ProfileUser.objects.get(user=request.user)
-
-			u = request.user
+			# print (request.POST.get('password'), "1")
+			data.set_password(request.POST.get('password'))
 			data.save()
-
-			# data.set_password(password)
-		# user_name = request.POST.get('name')
-		# user_username = request.POST.get('username')
-		# user_pass =  request.POST.get('pass')
-		# user_re_pass = request.POST.get('re_pass')
-		# user_mob = request.POST.get('mob')
-		# user_email = request.POST.get('email')
-
-			# user = ProfileUser.objects.filter(email=user_email)		
+		
 			return HttpResponseRedirect(reverse('product:main'))
-		return render(request, 'product/register.html', {'form':form})
-	return render(request, 'product/register.html', {'form':form})	
-'''
-def addproduct(request):
-	return render(request, 'product/addproduct.html', {})
-'''
-def view_product(request):
-	vendor_and_products = VendorAndProduct.objects.all().order_by('product_price').reverse().distinct()
-	# max_price = q.objects.aggregate(Max('product_price'))
-	# a = VendorAndProduct.objects.
+		return render(request, 'product/register.jinja', {'form':form})
+	return render(request, 'product/register.jinja', {'form':form})	
 
-	print(vendor_and_products)
-	print(type(vendor_and_products))
-	# vendor_and_products = VendorAndProduct.objects.all()
-	return render(request, 'product/viewproduct.html',{'vendor_and_products':vendor_and_products})
+
+
+def view_product(request):
+	o = []
+	a = VendorAndProduct.objects.all().order_by('-product_price')
+	for i in a:
+		if i.product_name not in o:
+			o.append(i.product_name)
+			o.append(i.pk)
+	
+	vendor_and_products=[]
+	for j in o[1::2]:
+		vendor_and_products.append(VendorAndProduct.objects.get(id=j))	
+	print(vendor_and_products[0].product_colour)
+	return render(request, 'product/viewproduct.jinja',{'vendor_and_products':vendor_and_products})
 	
 
-'''
-def deleteproduct(request):
-	return HttpResponse('delete')
-'''
-#database api functions
 def add_prod(request):
 
 	if request.method == 'POST':
@@ -151,7 +140,7 @@ def add_prod(request):
 
 		return HttpResponseRedirect(reverse('product:viewproduct'))
 		#return redirect('')
-	return render(request, 'product/addproduct.html', {})
+	return render(request, 'product/addproduct.jinja', {})
 
 def del_prod(request, product_id):
 	
@@ -183,7 +172,7 @@ def updateproduct(request, product_id):
 		prod.save()
 
 		return HttpResponseRedirect(reverse('product:viewproduct'))
-	return render(request, 'product/updateproduct.html',{'product':product})	
+	return render(request, 'product/updateproduct.jinja',{'product':product})	
 '''
 def login(request):
 	#if request.method=='POST':
