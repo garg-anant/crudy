@@ -67,6 +67,7 @@ class VendorUser(AbstractUser):
 class VendorAndProduct(models.Model):
 	# product = models.ForeignKey(Product, on_delete=models.CASCADE)
 	# vendor_id = models.ForeignKey(VendorUser, on_delete=models.CASCADE)
+
 	product_name = models.CharField(max_length=50)
 	product_colour = models.CharField(max_length=50)
 	product_screen_size = models.CharField(max_length=10)
@@ -74,6 +75,8 @@ class VendorAndProduct(models.Model):
 	product_ram = models.CharField(max_length=10)
 	product_memory = models.CharField(max_length=10)
 	product_price = models.PositiveIntegerField(default=0)
+	profileuser = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
+
 
 	def __str__(self):
 		return self.product_name

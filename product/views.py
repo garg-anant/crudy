@@ -50,19 +50,39 @@ def main(request):
 	# print('authenticated')
 	return render(request, 'product/main.jinja', {})	
 
+def change_price(request, row_id):
+	if request.method == 'POST':
+		print(request.POST)
+		# name = VendorAndProduct.objects.get()
+		# amount = request.POST.get('str(row_id)')
+		# amount = amount
+		print(row_id,'yoyoyoyoyoyo')
+		update_price = VendorAndProduct.objects.get(pk=row_id)
+		amount = request.POST.get(update_price.product_name)
+		print(update_price.product_price,'heheheheh')
+		print(type(amount),'lolololol')
+		print(amount)
+		update_price.product_price = amount
+		update_price.save()
+
+		return HttpResponseRedirect(reverse('product:main_vendor')) 
+
 def main_vendor(request):
-	# return True
-	# print(request,'123')
+
 	ctx = {}
 	if request.user.is_authenticated:
 		username = request.user.username
-		print(username)
-		ctx = {
+		userid = request.user.id
+		# print(username)
+
+		ctx1 = {
 			'username': username
 		}
-		
+
 		if request.method == 'POST':
 			# print('123')
+			userid = request.user.id
+			print (userid, "I AM HERE")
 			myfile = request.FILES['myfile']
 			# print(myfile)
 			fs = FileSystemStorage()
@@ -76,19 +96,54 @@ def main_vendor(request):
 			
 			
 			data=list(data)
+			#working till here
 
+			list_products = VendorAndProduct.objects.filter(profileuser_id=userid)
+
+			list_of_products = []
+
+			for objs in list_products:
+				list_of_products.append(objs.product_name) 	
+				list_of_products.append(objs.profileuser)
+
+
+			#working from here
 			for row in data[1:]:
-				vendorandproduct,_ = VendorAndProduct.objects.get_or_create(
-					product_name=row[0], product_colour=row[1], product_screen_size=row[2],
-					 product_os=row[3], product_ram=row[4], product_memory=row[5],
-					  product_price=row[6]
-				)
-			
+				if row[0] in list_of_products:
+					if userid == (list_of_products.index(row[0]))+1:
+						print('helloooo')
+						reccurring_product = VendorAndProduct.objects.get(product_name=row[0], profileuser_id=userid)
+						reccurring_product.product_colour=row[1] 
+						reccurring_product.product_screen_size=row[2]
+						reccurring_product.product_os=row[3]
+						reccurring_product.product_ram=row[4]
+						reccurring_product.product_memory=row[5]
+						reccurring_product.product_price=row[6]
+						# print(row[6])
+						# print(reccurring_product.product_price)
+						reccurring_product.save()
+
+				else:
+					vendorandproduct = VendorAndProduct.objects.create(
+						product_name=row[0], product_colour=row[1], product_screen_size=row[2],
+						 product_os=row[3], product_ram=row[4], product_memory=row[5],
+						  product_price=row[6], profileuser_id=userid
+					)
 			
 			
 			os.system('rm /home/anant/Desktop/new_project/project/media/vendor.csv')
+			
+			return render(request, 'product/main_vendor.jinja', ctx1)
 
-			return render(request, 'product/main_vendor.jinja', ctx)
+		list_products = VendorAndProduct.objects.filter(profileuser_id=userid)
+
+		# print(list_products)
+
+		ctx = {
+		'username': username,
+		'list_products': list_products 
+		}
+
 		return render(request, 'product/main_vendor.jinja', ctx)	
 	return render(request, 'product/index.jinja', ctx)
 
@@ -114,6 +169,8 @@ def register(request):
 
 
 def view_product(request):
+	
+	
 	o = []
 	a = VendorAndProduct.objects.all().order_by('-product_price')
 	for i in a:
@@ -124,9 +181,13 @@ def view_product(request):
 	vendor_and_products=[]
 	for j in o[1::2]:
 		vendor_and_products.append(VendorAndProduct.objects.get(id=j))	
-	print(vendor_and_products[0].product_colour)
+	# print(vendor_and_products[0].product_colour)
 	return render(request, 'product/viewproduct.jinja',{'vendor_and_products':vendor_and_products})
 	
+
+	# a = VendorAndProduct.objects.values('product_name').annotate(c=Count('product_name')).filter(c__gt=1)
+
+
 
 def add_prod(request):
 

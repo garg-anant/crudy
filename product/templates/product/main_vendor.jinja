@@ -4,7 +4,7 @@
 <div class="container">
 <h2 id='abc'>Vendor Page</h2><br>
 <!--<a href="{% url 'product:logout' %}"><u>Log out</u></a><br>-->
-<h4 id='name'>Welcome, {{username}}</h4><br>
+<h4 id='name'>Welcome, {{ username }}</h4><br>
 <!--  <h5> <a href="/home/anant/Desktop/new_project/project/media/sample/sample.xls">Download</a> here the excel file </h5>  -->
 
 <form action="{% url 'product:main_vendor' %}" enctype="multipart/form-data" method='POST' class="custom-file">
@@ -12,6 +12,41 @@
 	<pre><input type='file' name='myfile'><br><input type='submit' value='Upload'> </pre>
 	
 </form> 
+<br>
+<table class="table table-striped">
+	<h3 id='abc'> Products listed by you : </h3><br><br>
+			<thead>
+				<tr>
+					<th>Model</th>
+					<th>Color</th>
+					<th>Screen-Size</th>
+					<th>OS</th>
+					<th>RAM</th>
+					<th>Memory</th>
+					<th>Price</th>
+					<th>Button</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for list_product in list_products %}
+					<tr>
+						<td>{{ list_product.product_name }}</td>
+						<td>{{ list_product.product_colour }}</td>
+						<td>{{ list_product.product_screen_size }}</td>
+						<td>{{ list_product.product_os }}</td>
+						<td>{{ list_product.product_ram }}</td>
+						<td>{{ list_product.product_memory }}</td>
+						<form method="post" action="{% url 'product:change_price' list_product.id %}">
+						{% csrf_token %}
+						<td>₹ <input type="text" value="{{ list_product.product_price }}" size="10" name="{{ list_product.product_name }}"></td>
+						<td><input type="submit" class="btn btn-primary" value="Save"></td>
+						</form>  
+					</tr>
+					{% endfor %}
+			</tbody>
+
+		</table>
 
 </div>
 
